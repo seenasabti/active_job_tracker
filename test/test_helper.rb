@@ -15,7 +15,7 @@ if ActiveSupport::TestCase.respond_to?(:fixture_paths=)
 end
 
 ActiveRecord::Base.connection.create_table :active_job_tracker_records, force: true do |t|
-  t.belongs_to :active_job_trackable, polymorphic: true, index: { name: "index_active_job_tracker_records_on_active_job_trackable", unique: true }
+  t.belongs_to :active_job_trackable, polymorphic: true, index: { name: "index_active_job_tracker_records_on_active_job_trackable" }
 
   t.string :job_id, null: false, index: true
   t.integer :status, default: 0, null: false
