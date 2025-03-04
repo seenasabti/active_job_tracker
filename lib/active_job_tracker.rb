@@ -42,6 +42,7 @@ module ActiveJobTracker
   def active_job_tracker_log_error(exception)
     active_job_tracker.update(
      status: "failed",
+     failed_at: Time.current,
      error: exception.message,
      backtrace: exception.backtrace&.join("\n").to_s.truncate(1000)
     )

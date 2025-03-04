@@ -12,6 +12,7 @@ class CreateActiveJobTrackerRecords < ActiveRecord::Migration[8.0]
       t.text :backtrace
 
       t.datetime :started_at
+      t.datetime :failed_at
       t.datetime :completed_at
 
       t.timestamps
