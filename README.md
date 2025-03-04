@@ -73,22 +73,33 @@ end
 
 ### Basic Setup
 
+Set up the model that creates jobs:
+
+```ruby
+class CsvUpload < ApplicationRecord
+  # Sets up polymorphic association to tie this record to the ActiveJobTracker
+  has_one :job, as: :active_job_trackable, class_name: 'ActiveJobTrackerRecord'
+
+  after_create :create_jobs
+
+  def create_jobs
+    # The tracked record must be passed into the job as the first argument
+    ProcessImportJob.perform_later(self)
+  end
+end
+
+```
+
 Include the `ActiveJobTracker` module in your job classes:
 
 ```ruby
-class MyJob < ApplicationJob
+class ProcessImportJob < ApplicationJob
   include ActiveJobTracker
 
   def perform(*args)
     # Your job logic here
   end
 end
-```
-
-Then
-
-```ruby
-MyJob.perform_later
 ```
 
 This automatically tracks the job's status (pending, running, completed, failed) throughout its lifecycle.
@@ -129,7 +140,7 @@ def perform
   1000.times do |i|
     # Process item
 
-    # This will only update the database every 20 items
+    # This will only update the database every 20th increment
     active_job_tracker_progress(cache: true)
   end
 end
