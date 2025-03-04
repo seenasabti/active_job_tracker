@@ -17,9 +17,9 @@ ActiveJobTracker.configure do |config|
 
   # Default partial path for rendering job trackers
   # (default: 'active_job_tracker/shared/active_job_tracker')
-  config.default_partial = 'active_job_tracker/active_job_tracker'
+  config.default_partial = "active_job_tracker/active_job_tracker"
 
   # Whether to include the style in the job tracker (default: true)
   # When true, the gem's CSS styles are automatically included
   config.include_style = true
-end 
+end
