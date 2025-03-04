@@ -1,4 +1,4 @@
-class CreateActiveJobTrackerRecords < ActiveRecord::Migration[7.0]
+class CreateActiveJobTrackerRecords < ActiveRecord::Migration[8.0]
   def change
     create_table :active_job_tracker_records do |t|
       t.belongs_to :active_job_trackable, polymorphic: true, index: { name: "index_active_job_tracker_records_on_active_job_trackable", unique: true }
