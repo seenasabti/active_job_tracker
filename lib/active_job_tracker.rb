@@ -73,7 +73,7 @@ module ActiveJobTracker
 
   def mark_as_completed
     active_job_tracker.flush_progress_cache
-    if active_job_tracker.current === active_job_tracker.target
+    if active_job_tracker.current == active_job_tracker.target
       active_job_tracker.update(status: "completed", completed_at: Time.current)
     end
   end
