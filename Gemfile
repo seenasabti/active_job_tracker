@@ -3,14 +3,16 @@ source "https://rubygems.org"
 # Specify your gem's dependencies in active_job_tracker.gemspec.
 gemspec
 
-gem "puma"
+group :test do
+  gem "mocha"
+end
 
-gem "sqlite3"
+group :development do
+  gem "puma"
+  gem "sqlite3"
+  gem "propshaft"
+  gem "rubocop-rails-omakase", require: false
 
-gem "propshaft"
-
-# Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
-gem "rubocop-rails-omakase", require: false
-
-# Start debugger with binding.b [https://github.com/ruby/debug]
-# gem "debug", ">= 1.0.0"
+  # Start debugger with binding.b [https://github.com/ruby/debug]
+  # gem "debug", ">= 1.0.0"
+end
