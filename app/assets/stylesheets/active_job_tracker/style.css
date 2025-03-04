@@ -1,0 +1,197 @@
+/* ActiveJob Tracker - Modern Styling */
+.active_job_tracker {
+    --primary-color: #4f46e5;
+    --primary-light: #6366f1;
+    --completed-color: #059669;
+    --danger-color: #dc2626;
+    --danger-light: #ef4444;
+    --neutral-100: #f4f4f5;
+    --neutral-200: #e4e4e7;
+    --neutral-300: #d4d4d8;
+    --neutral-400: #a1a1aa;
+    --neutral-500: #71717a;
+    --neutral-600: #52525b;
+    --neutral-800: #27272a;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    width: 100%;
+    margin: 0.75rem auto;
+    background-color: white;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--neutral-200);
+    transition: all 0.2s ease;
+}
+
+.active_job_tracker progress::-webkit-progress-bar {
+    background-color: var(--neutral-200);
+    border-radius: 6px;
+}
+
+.active_job_tracker-default {
+    padding: 1rem;
+}
+
+.active_job_tracker-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.active_job_tracker-status-badge {
+    padding: 0.375rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.025em;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    box-shadow: var(--shadow-sm);
+}
+
+.active_job_tracker-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    color: var(--neutral-800);
+}
+
+.active_job_tracker-progress-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 0.75rem;
+}
+
+.active_job_tracker-progress {
+    flex: 1;
+    height: 8px;
+    appearance: none;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: all 0.4s ease-in-out;
+}
+
+.active_job_tracker-progress-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--neutral-600);
+    width: 2rem;
+    text-align: right;
+}
+
+.active_job_tracker-body {
+    padding: 0.5rem 0;
+}
+
+.active_job_tracker-progress-container {
+    margin: 1rem 0;
+    transition: transform 0.2s ease;
+}
+
+/* Status Styles */
+.active_job_tracker-status-pending .active_job_tracker-status-badge {
+    background-color: var(--neutral-500);
+    color: white;
+}
+
+.active_job_tracker-status-pending progress::-webkit-progress-value {
+    background: var(--neutral-400);
+}
+
+.active_job_tracker-status-pending progress::-moz-progress-bar {
+    background: var(--neutral-400);
+}
+
+.active_job_tracker-status-running .active_job_tracker-status-badge {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.active_job_tracker-status-running progress::-webkit-progress-value {
+    background: linear-gradient(
+            90deg,
+            var(--primary-light),
+            var(--primary-color)
+    );
+    background-size: 200% 100%;
+}
+
+.active_job_tracker-status-running progress::-moz-progress-bar {
+    background: linear-gradient(
+            90deg,
+            var(--primary-light),
+            var(--primary-color)
+    );
+    background-size: 200% 100%;
+}
+
+.active_job_tracker-status-completed .active_job_tracker-status-badge {
+    background-color: var(--completed-color);
+    color: white;
+}
+
+.active_job_tracker-status-completed progress::-webkit-progress-value {
+    background: var(--completed-color);
+}
+
+.active_job_tracker-status-completed progress::-moz-progress-bar {
+    background: var(--completed-color);
+}
+
+.active_job_tracker-status-failed .active_job_tracker-status-badge {
+    background-color: var(--danger-color);
+    color: white;
+}
+
+.active_job_tracker-status-failed progress::-webkit-progress-value {
+    background: var(--danger-color);
+}
+
+.active_job_tracker-status-failed progress::-moz-progress-bar {
+    background: var(--danger-color);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .active_job_tracker {
+        margin: 1rem 0;
+    }
+
+    .active_job_tracker-default {
+        padding: 1rem;
+    }
+
+    .active_job_tracker-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .active_job_tracker-default {
+        padding: 0.875rem;
+    }
+
+    .active_job_tracker-progress-container {
+        padding: 0.5rem;
+        margin: 1rem 0;
+    }
+
+    .active_job_tracker-progress-wrapper {
+        gap: 0.75rem;
+    }
+
+    .active_job_tracker-error pre {
+        font-size: 0.75rem;
+        max-height: 12rem;
+    }
+}
