@@ -1,0 +1,13 @@
+<% if ActiveJobTracker.configuration.include_style %>
+  <%= stylesheet_link_tag "active_job_tracker/style", media: "all" %>
+<% end %>
+
+<%
+  html_options ||= {}
+  css_class = html_options[:class] || "active_job_tracker-container"
+%>
+<%= turbo_stream_from "active_job_trackers" %>
+<div class="<%= css_class %>" data-controller="active_job_tracker-container">
+  <%= content %>
+</div>
+

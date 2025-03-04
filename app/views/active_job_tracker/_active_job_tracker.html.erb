@@ -1,0 +1,23 @@
+<%
+  html_classes = %W[active_job_tracker active_job_tracker-status-#{active_job_tracker_record.status}]
+  id = "active_job_tracker_#{active_job_tracker_record.id}"
+%>
+
+<div id="<%= id %>" class="<%= html_classes.join(" ") %>">
+  <div class="active_job_tracker-default">
+    <div class="active_job_tracker-body">
+      <div class="active_job_tracker-progress-container">
+        <div class="active_job_tracker-header">
+          <span class="active_job_tracker-title">
+            CSV Upload #<%= active_job_tracker_record.id %>
+          </span>
+          <span class="active_job_tracker-status-badge"><%= active_job_tracker_record.status %></span>
+        </div>
+        <div class="active_job_tracker-progress-wrapper">
+          <progress class="active_job_tracker-progress" value="<%= active_job_tracker_record.current %>" max="<%= active_job_tracker_record.target %>"></progress>
+          <span class="active_job_tracker-progress-label"><%= active_job_tracker_record.progress_percentage %>%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
