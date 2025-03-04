@@ -39,15 +39,6 @@ module ActiveJobTracker
     active_job_tracker.progress(cache)
   end
 
-  def active_job_tracker_log_error(exception)
-    active_job_tracker.update(
-     status: "failed",
-     failed_at: Time.current,
-     error: exception.message,
-     backtrace: exception.backtrace&.join("\n").to_s.truncate(1000)
-    )
-  end
-
   def active_job_tracker
     @active_job_tracker ||= ::ActiveJobTrackerRecord.find_or_create_by(job_id: job_id, active_job_trackable: trackable)
   end
@@ -76,5 +67,15 @@ module ActiveJobTracker
     if active_job_tracker.current == active_job_tracker.target
       active_job_tracker.update(status: "completed", completed_at: Time.current)
     end
+  end
+
+  def active_job_tracker_log_error(exception)
+    active_job_tracker.flush_progress_cache
+    active_job_tracker.update(
+     status: "failed",
+     failed_at: Time.current,
+     error: exception.message,
+     backtrace: exception.backtrace&.join("\n").to_s.truncate(1000)
+    )
   end
 end
