@@ -1,4 +1,4 @@
-# ActiveJobTracker
+# ActiveJobTracker (WIP)
 
 ActiveJobTracker provides persisted, real-time tracking and monitoring of ActiveJob jobs in Ruby on Rails applications. It allows you to track job status, progress, and errors with a simple API and real-time UI updates via ActionCable.
 
