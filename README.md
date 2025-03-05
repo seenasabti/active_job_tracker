@@ -129,7 +129,7 @@ class ProcessImportJob < ApplicationJob
 end
 ```
 
-For more efficient progress tracking with many updates, use progress caching:
+For more efficient progress tracking with many updates, use threadsafe progress caching:
 
 ```ruby
 # In your job
