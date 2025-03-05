@@ -11,8 +11,8 @@ group :development do
   gem "puma"
   gem "sqlite3"
   gem "propshaft"
-  gem 'redis'
-  gem 'redis-rails'
+  gem "redis"
+  gem "redis-rails"
 
   gem "rubocop-rails-omakase", require: false
 
