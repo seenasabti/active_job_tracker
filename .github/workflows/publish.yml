@@ -1,6 +1,7 @@
 name: Ruby Gem
 
 on:
+  workflow_dispatch:  # Allows manual trigger
   push:
     tags:
       - "v*"
