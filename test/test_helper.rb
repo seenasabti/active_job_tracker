@@ -36,3 +36,7 @@ ActiveRecord::Base.connection.create_table :has_trackers, force: true do |t|
   t.string :name
   t.timestamps
 end
+
+class HasTracker < ApplicationRecord
+  has_one :job, as: :active_job_trackable, class_name: "ActiveJobTrackerRecord"
+end

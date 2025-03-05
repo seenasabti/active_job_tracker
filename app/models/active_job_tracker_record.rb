@@ -1,11 +1,12 @@
 class ActiveJobTrackerRecord < ApplicationRecord
-  attr_accessor :progress_cache
-
   enum :status, { pending: 0, running: 1, completed: 2, failed: 3 }
   validates :job_id, presence: true, uniqueness: true
   belongs_to :active_job_trackable, polymorphic: true
 
   after_update :broadcast_changes, if: -> { ActiveJobTracker.configuration.auto_broadcast }
+
+  # Class-level mutex for thread-safety
+  @@mutex = Mutex.new
 
   def cache_threshold=(value)
     @cache_threshold = value || ActiveJobTracker.configuration.cache_threshold
@@ -16,7 +17,15 @@ class ActiveJobTrackerRecord < ApplicationRecord
   end
 
   def progress_cache
-    @progress_cache ||= 0
+    Rails.cache.fetch(progress_cache_key, expires_in: 1.week) { 0 }.to_i
+  end
+
+  def progress_cache=(value)
+    Rails.cache.write(progress_cache_key, value, expires_in: 1.week)
+  end
+
+  def progress_cache_key
+    "active_job_tracker:#{self.id}:progress_cache"
   end
 
   def progress_percentage
@@ -36,24 +45,43 @@ class ActiveJobTrackerRecord < ApplicationRecord
 
   def progress(use_cache = true)
     if use_cache
-      self.progress_cache = self.progress_cache + 1
-      flush_progress_cache if self.progress_cache >= self.cache_threshold
+      key = progress_cache_key
+      should_flush = false
+
+      @@mutex.synchronize do
+        current_value = Rails.cache.fetch(key, expires_in: 1.week) { 0 }.to_i
+        new_value = current_value + 1
+        Rails.cache.write(key, new_value, expires_in: 1.week)
+
+        should_flush = new_value >= self.cache_threshold
+      end
+
+      # Flush outside the mutex to avoid deadlocks
+      flush_progress_cache if should_flush
     else
       with_lock do
-        self.current = self.current + 1
-        save
+        self.current += 1
+        save!
       end
     end
     self
   end
 
   def flush_progress_cache
-    return if self.progress_cache.zero?
-    with_lock do
-      self.current = self.current + self.progress_cache
-      save
+    key = progress_cache_key
+
+    cache_value = 0
+    @@mutex.synchronize do
+      cache_value = Rails.cache.read(key).to_i
+      Rails.cache.delete(key)
     end
-    @progress_cache = 0
+
+    if cache_value > 0
+      with_lock do
+        self.current += cache_value
+        save!
+      end
+    end
   end
 
   private

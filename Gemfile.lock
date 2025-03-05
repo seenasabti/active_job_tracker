@@ -87,6 +87,9 @@ GEM
     connection_pool (2.5.0)
     crass (1.0.6)
     date (3.4.1)
+    debug (1.10.0)
+      irb (~> 1.10)
+      reline (>= 0.3.8)
     drb (2.2.1)
     erubi (1.13.1)
     globalid (1.2.1)
@@ -188,6 +191,11 @@ GEM
     rake (13.2.1)
     rdoc (6.12.0)
       psych (>= 4.0.0)
+    redis (5.4.0)
+      redis-client (>= 0.22.0)
+    redis-client (0.23.2)
+      connection_pool
+    redis-rails (0.0.0)
     regexp_parser (2.10.0)
     reline (0.6.0)
       io-console (~> 0.5)
@@ -245,9 +253,12 @@ PLATFORMS
 
 DEPENDENCIES
   active_job_tracker!
+  debug (>= 1.0.0)
   mocha
   propshaft
   puma
+  redis
+  redis-rails
   rubocop-rails-omakase
   sqlite3
 
