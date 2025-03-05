@@ -20,4 +20,11 @@ Gem::Specification.new do |spec|
   end
 
   spec.add_dependency "rails", ">= 8.0.1"
+
+  spec.add_development_dependency "mocha"
+  spec.add_development_dependency "sqlite3"
+  spec.add_development_dependency "puma"
+  spec.add_development_dependency "propshaft"
+  spec.add_development_dependency "rubocop-rails-omakase"
+  spec.add_development_dependency "debug", ">= 1.0.0"
 end
