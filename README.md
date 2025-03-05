@@ -1,4 +1,4 @@
-# ActiveJobTracker (WIP)
+# ActiveJobTracker
 
 ActiveJobTracker provides persisted, real-time tracking and monitoring of ActiveJob jobs in Ruby on Rails applications. It allows you to track job status, progress, and errors with a simple API and real-time UI updates via ActionCable.
 
@@ -96,7 +96,7 @@ Include the `ActiveJobTracker` module in your job classes:
 class ProcessImportJob < ApplicationJob
   include ActiveJobTracker
 
-  def perform(*args)
+  def perform(csv_upload)
     # Your job logic here
   end
 end
@@ -246,14 +246,13 @@ rescue_from(Exception) do |exception|
 end
 ```
 
-You can also manually log errors:
+To handle errors:
 
 ```ruby
 def perform
   begin
     # Risky operation
   rescue => e
-    active_job_tracker_log_error(e)
     # Handle the error
   end
 end
