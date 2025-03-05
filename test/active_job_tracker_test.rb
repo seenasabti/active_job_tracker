@@ -135,7 +135,3 @@ class Job < ApplicationJob
     end
   end
 end
-
-class HasTracker < ApplicationRecord
-  has_one :job, as: :active_job_trackable, class_name: "ActiveJobTrackerRecord"
-end
