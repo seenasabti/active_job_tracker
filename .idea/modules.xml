@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="ProjectModuleManager">
-    <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/active_job_tracker.iml" filepath="$PROJECT_DIR$/.idea/active_job_tracker.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../activejob-tracker/.idea/activejob-tracker.iml" filepath="$PROJECT_DIR$/../activejob-tracker/.idea/activejob-tracker.iml" />
-    </modules>
-  </component>
-</project>
