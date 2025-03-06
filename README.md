@@ -12,7 +12,7 @@ ActiveJobTracker provides persisted, real-time tracking and monitoring of Active
 - Monitor job progress with percentage completion
 - Real-time UI updates via ActionCable
 - Error tracking and reporting
-- Efficient progress caching to minimize database updates
+- Efficient progress write-behind caching to minimize database updates
 - Configurable options
 
 ## Installation
@@ -82,9 +82,9 @@ class CsvUpload < ApplicationRecord
   # Sets up polymorphic association to tie this record to the ActiveJobTracker
   has_one :job, as: :active_job_trackable, class_name: 'ActiveJobTrackerRecord'
 
-  after_create :create_jobs
+  after_create :process_import
 
-  def create_jobs
+  def process_import
     # The tracked record must be passed into the job as the first argument
     ProcessImportJob.perform_later(self)
   end
