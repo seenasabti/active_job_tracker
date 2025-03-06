@@ -9,11 +9,8 @@ Gem::Specification.new do |spec|
   spec.description = "ActiveJobTracker provides a way to track the progress of ActiveJob jobs."
   spec.license = "MIT"
 
-  spec.metadata["allowed_push_host"] = ["https://rubygems.org", "https://rubygems.pkg.github.com/seenasabti"]
-
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = spec.homepage
-  spec.metadata["changelog_uri"] = "#{spec.homepage}/CHANGELOG.md"
 
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
     Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
