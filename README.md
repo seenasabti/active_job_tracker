@@ -2,7 +2,9 @@
 
 ActiveJobTracker provides persisted, real-time tracking and monitoring of ActiveJob jobs in Ruby on Rails applications. It allows you to track job status, progress, and errors with a simple API and real-time UI updates via ActionCable.
 
-<img width="796" alt="Screenshot 2025-03-04 at 1 09 38 PM" src="https://github.com/user-attachments/assets/d34e6fb8-bb3c-4d71-a737-2f7597a23c43" />
+<div align="center">
+<img width="500" alt="Screenshot 2025-03-04 at 1 09 38 PM" src="https://github.com/user-attachments/assets/d34e6fb8-bb3c-4d71-a737-2f7597a23c43" />
+</div>
 
 ## Features
 
