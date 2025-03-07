@@ -1,4 +1,4 @@
-I'm looking for a full-time position. Please consider hiring me. 
+❤️ I'm looking for a full-time position. Please consider hiring me. 
 
 # ActiveJobTracker
 
