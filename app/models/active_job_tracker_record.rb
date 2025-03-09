@@ -87,7 +87,7 @@ class ActiveJobTrackerRecord < ApplicationRecord
   private
 
   def broadcast_changes
-    broadcast_replace_to(
+    ActiveJobTracker.configuration.turbo_stream_channel.constantize.broadcast_replace_to(
      "active_job_trackers",
      target: "active_job_tracker_#{self.id}",
      partial: ActiveJobTracker.configuration.default_partial,

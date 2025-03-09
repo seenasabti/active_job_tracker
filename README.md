@@ -70,6 +70,10 @@ ActiveJobTracker.configure do |config|
   # Whether to include the style in the job tracker (default: true)
   # When true, the gem's CSS styles are automatically included
   config.include_style = true
+
+  # Custom Turbo Stream channel name (default: 'active_job_tracker')
+  # Use this to customize the ActionCable channel name for real-time updates
+  config.turbo_stream_channel = 'Custom::Stream::Channel'
 end
 ```
 
@@ -171,6 +175,7 @@ This will render a default tracker UI with progress bar, status badge, and job i
 #### Custom Rendering
 
 You can customize the tracker UI by creating your own partials and using the ActiveJobTrackerRecord model attributes:
+
 - Make sure to set the `config.default_partial` to the new partial path
 - Each job block needs to be wrapped with `id="active_job_tracker_<%= tracker.id %>"` for turbo to update your frontend
 

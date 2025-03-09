@@ -6,7 +6,7 @@
   html_options ||= {}
   css_class = html_options[:class] || "active_job_tracker-container"
 %>
-<%= turbo_stream_from "active_job_trackers" %>
+<%= turbo_stream_from "active_job_trackers", channel: ActiveJobTracker.configuration.turbo_stream_channel %>
 <div class="<%= css_class %>" data-controller="active_job_tracker-container">
   <%= content %>
 </div>

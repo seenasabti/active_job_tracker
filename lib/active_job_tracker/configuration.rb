@@ -23,6 +23,10 @@ module ActiveJobTracker
     # @return [Boolean]
     attr_accessor :include_style
 
+    # The turbo stream channel to use for broadcasting job tracker updates
+    # @return [String]
+    attr_accessor :turbo_stream_channel
+
     # Initialize with default values
     def initialize
       @default_target = 100
@@ -30,6 +34,7 @@ module ActiveJobTracker
       @auto_broadcast = true
       @default_partial = "active_job_tracker/active_job_tracker"
       @include_style = true
+      @turbo_stream_channel = "Turbo::StreamsChannel"
     end
   end
 end

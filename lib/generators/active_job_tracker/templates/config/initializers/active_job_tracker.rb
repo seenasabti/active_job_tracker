@@ -22,4 +22,8 @@ ActiveJobTracker.configure do |config|
   # Whether to include the style in the job tracker (default: true)
   # When true, the gem's CSS styles are automatically included
   config.include_style = true
+
+  # The turbo stream channel to use for broadcasting job tracker updates
+  # (default: 'Turbo::StreamsChannel')
+  config.turbo_stream_channel = "Turbo::StreamsChannel"
 end
