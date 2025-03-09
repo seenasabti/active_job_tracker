@@ -1,4 +1,4 @@
-❤️ I'm looking for a full-time position. Please consider hiring me. 
+❤️ I'm looking for a full-time position. Please consider hiring me.
 
 # ActiveJobTracker
 
@@ -73,7 +73,7 @@ ActiveJobTracker.configure do |config|
 
   # Custom Turbo Stream channel name (default: 'active_job_tracker')
   # Use this to customize the ActionCable channel name for real-time updates
-  config.turbo_stream_channel = 'Custom::Stream::Channel'
+  config.turbo_stream_channel = 'Turbo::StreamsChannel'
 end
 ```
 
