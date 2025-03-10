@@ -19,6 +19,10 @@ module ActiveJobTracker
     # @return [String]
     attr_accessor :default_partial
 
+    # Whether to raise an error when progress increments the current value beyond the target value
+    # @return [Boolean]
+    attr_accessor :raise_error_when_target_exceeded
+
     # Whether to include the style in the job tracker
     # @return [Boolean]
     attr_accessor :include_style
@@ -32,6 +36,7 @@ module ActiveJobTracker
       @default_target = 100
       @cache_threshold = 10
       @auto_broadcast = true
+      @raise_error_when_target_exceeded = false
       @default_partial = "active_job_tracker/active_job_tracker"
       @include_style = true
       @turbo_stream_channel = "Turbo::StreamsChannel"

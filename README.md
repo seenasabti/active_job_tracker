@@ -63,6 +63,9 @@ ActiveJobTracker.configure do |config|
   # When true, job updates are automatically broadcast via ActionCable
   config.auto_broadcast = true
 
+  # Whether to raise an error when progress increments the current value beyond the target value (default: false)
+  config.raise_error_when_target_exceeded = false
+
   # Default partial path for rendering job trackers
   # (default: 'active_job_tracker/active_job_tracker')
   config.default_partial = 'active_job_tracker/active_job_tracker'
@@ -130,9 +133,23 @@ class ProcessImportJob < ApplicationJob
     records.each do |record|
       # Process item
 
-      # Update progress (increments by 1)
+      # Update progress (increments by 1 by default)
       active_job_tracker_progress
     end
+  end
+end
+```
+
+Optionally, you can use a custom value to increment your progress by:
+
+```ruby
+def perform
+  # Default target is 100
+
+  10.times do
+    # Process item
+
+    active_job_tracker_progress(increment_by: 10)
   end
 end
 ```
