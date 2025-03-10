@@ -15,6 +15,9 @@ ActiveJobTracker.configure do |config|
   # When true, job updates are automatically broadcast via ActionCable
   config.auto_broadcast = true
 
+  # Whether to raise an error when progress increments the current value beyond the target value
+  config.raise_error_when_target_exceeded = false
+
   # Default partial path for rendering job trackers
   # (default: 'active_job_tracker/shared/active_job_tracker')
   config.default_partial = "active_job_tracker/active_job_tracker"

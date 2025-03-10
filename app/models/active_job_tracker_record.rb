@@ -43,14 +43,15 @@ class ActiveJobTrackerRecord < ApplicationRecord
     [ current.to_f / target.to_f, 1.0 ].min
   end
 
-  def progress(use_cache = true)
+  def progress(use_cache: true, increment_by: 1)
     if use_cache
       key = progress_cache_key
       should_flush = false
 
       @@mutex.synchronize do
         current_value = Rails.cache.fetch(key, expires_in: 1.week) { 0 }.to_i
-        new_value = current_value + 1
+        new_value = incremented_value(current_value: current_value, increment_by: increment_by)
+
         Rails.cache.write(key, new_value, expires_in: 1.week)
 
         should_flush = new_value >= self.cache_threshold
@@ -60,7 +61,7 @@ class ActiveJobTrackerRecord < ApplicationRecord
       flush_progress_cache if should_flush
     else
       with_lock do
-        self.current += 1
+        self.current = incremented_value(current_value: current, increment_by: increment_by)
         save!
       end
     end
@@ -85,6 +86,22 @@ class ActiveJobTrackerRecord < ApplicationRecord
   end
 
   private
+
+  def incremented_value(current_value:, increment_by:)
+    new_value = current_value + increment_by
+
+    if new_value > target
+      if ActiveJobTracker.configuration.raise_error_when_target_exceeded
+        raise ActiveJobTracker::Error::TargetExceeded.new(
+          "The current value of #{new_value} exceeds the target value of #{target}"
+        )
+      end
+
+      target
+    else
+      new_value
+    end
+  end
 
   def broadcast_changes
     ActiveJobTracker.configuration.turbo_stream_channel.constantize.broadcast_replace_to(

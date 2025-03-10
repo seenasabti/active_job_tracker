@@ -177,13 +177,50 @@ class ActiveJobTrackerRecordTest < ActiveSupport::TestCase
   test "progress without cache updates current directly" do
     @record.current = 0
 
-    @record.progress(false)
+    @record.progress(use_cache: false)
     assert_equal 0, @record.progress_cache
     assert_equal 1, @record.current
 
-    @record.progress(false)
+    @record.progress(use_cache: false)
     assert_equal 0, @record.progress_cache
     assert_equal 2, @record.current
+  end
+
+  test "progress allows incrementing current by custom value" do
+    @record.current = 0
+
+    @record.progress(use_cache: false, increment_by: 10)
+    assert_equal 10, @record.current
+
+    @record.progress(use_cache: false, increment_by: 42)
+    assert_equal 52, @record.current
+  end
+
+  test "when relevant configuration is enabled, throws error when progress increments current value beyond target" do
+    ActiveJobTracker.configuration.raise_error_when_target_exceeded = true
+
+    @record.current = 0
+
+    @record.progress(use_cache: false, increment_by: 50)
+    assert_equal 50, @record.current
+
+    assert_raises(ActiveJobTracker::Error::TargetExceeded, /current value.*150.*target value.*100/) do
+      @record.progress(use_cache: false, increment_by: 100)
+    end
+
+    ActiveJobTracker.configuration.raise_error_when_target_exceeded = false
+  end
+
+  test "when relevant configuration is disabled, prevents progress from incrementing current value beyond target" do
+    ActiveJobTracker.configuration.raise_error_when_target_exceeded = false
+
+    @record.current = 0
+
+    @record.progress(use_cache: false, increment_by: 50)
+    assert_equal 50, @record.current
+
+    @record.progress(use_cache: false, increment_by: 100)
+    assert_equal 100, @record.current
   end
 
   test "flush_progress_cache updates current and resets cache" do
@@ -230,7 +267,7 @@ class ActiveJobTrackerRecordTest < ActiveSupport::TestCase
     thread_count.times do |i|
       threads << Thread.new do
         increments_per_thread.times do |j|
-          @record.progress(true)
+          @record.progress(use_cache: true)
           puts "Thread #{i} increment #{j}: cache=#{@record.progress_cache}, current=#{@record.current}" if ENV["DEBUG"]
         end
       end

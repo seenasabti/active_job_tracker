@@ -17,6 +17,7 @@ class ActiveJobTrackerTest < ActiveSupport::TestCase
     assert_equal 100, config.default_target
     assert_equal 10, config.cache_threshold
     assert_equal true, config.auto_broadcast
+    assert_equal false, config.raise_error_when_target_exceeded
     assert_equal "active_job_tracker/active_job_tracker", config.default_partial
     assert_equal true, config.include_style
   end
@@ -28,6 +29,7 @@ class ActiveJobTrackerTest < ActiveSupport::TestCase
       config.default_target = 200
       config.cache_threshold = 5
       config.auto_broadcast = false
+      config.raise_error_when_target_exceeded = true
       config.default_partial = "custom/partial"
       config.include_style = false
     end
@@ -36,6 +38,7 @@ class ActiveJobTrackerTest < ActiveSupport::TestCase
     assert_equal 200, config.default_target
     assert_equal 5, config.cache_threshold
     assert_equal false, config.auto_broadcast
+    assert_equal true, config.raise_error_when_target_exceeded
     assert_equal "custom/partial", config.default_partial
     assert_equal false, config.include_style
 
@@ -43,6 +46,7 @@ class ActiveJobTrackerTest < ActiveSupport::TestCase
       config.default_target = original_config.default_target
       config.cache_threshold = original_config.cache_threshold
       config.auto_broadcast = original_config.auto_broadcast
+      config.raise_error_when_target_exceeded = original_config.raise_error_when_target_exceeded
       config.default_partial = original_config.default_partial
       config.include_style = original_config.include_style
     end

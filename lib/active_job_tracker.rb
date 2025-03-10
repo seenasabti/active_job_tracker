@@ -6,6 +6,7 @@ module ActiveJobTracker
   extend ActiveSupport::Concern
 
   class Error < StandardError
+    class TargetExceeded < Error; end
   end
 
   def self.configuration
@@ -35,8 +36,8 @@ module ActiveJobTracker
     active_job_tracker.update(target: target)
   end
 
-  def active_job_tracker_progress(cache: false)
-    active_job_tracker.progress(cache)
+  def active_job_tracker_progress(cache: false, increment_by: 1)
+    active_job_tracker.progress(use_cache: cache, increment_by: increment_by)
   end
 
   def active_job_tracker
