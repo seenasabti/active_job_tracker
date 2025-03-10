@@ -10,4 +10,4 @@
 /test/dummy/tmp/
 /.idea/
 .DS_Store
-Gemflle.lock
+Gemfile.lock
