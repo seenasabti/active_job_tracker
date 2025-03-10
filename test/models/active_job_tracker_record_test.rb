@@ -209,15 +209,7 @@ class ActiveJobTrackerRecordTest < ActiveSupport::TestCase
     original_auto_broadcast = ActiveJobTracker.configuration.auto_broadcast
     ActiveJobTracker.configuration.auto_broadcast = true
 
-    @record.expects(:broadcast_replace_to).with(
-     "active_job_trackers",
-     target: "active_job_tracker_#{@record.id}",
-     partial: ActiveJobTracker.configuration.default_partial,
-     locals: {
-      active_job_tracker_record: @record
-     }
-    )
-
+    @record.expects(:broadcast_changes)
     @record.update(status: :running)
 
     # Reset configuration
